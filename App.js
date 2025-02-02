@@ -19,6 +19,7 @@ import LearnMoreScreen from "./LearnMoreScreen";
 import BookNowScreen from "./BookNowScreen";
 import MessagesScreen from "./MessagesScreen";
 import ProfileScreen from "./ProfileScreen";
+import SettingsScreen from "./SettingsScreen";
 
 const Stack = createStackNavigator();
 
@@ -55,6 +56,7 @@ export default function App() {
           <Stack.Screen name="BookNow" component={BookNowScreen} />
           <Stack.Screen name="Messages" component={MessagesScreen} />
           <Stack.Screen name="Profile" component={ProfileScreen} />
+          <Stack.Screen name="Settings" component={SettingsScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     </PaperProvider>
