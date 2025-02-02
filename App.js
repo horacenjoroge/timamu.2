@@ -7,10 +7,16 @@ import {
   Montserrat_400Regular,
   Montserrat_700Bold,
 } from "@expo-google-fonts/montserrat";
+
+// Import all screens
 import SplashScreen from "./SplashScreen";
 import LoginScreen from "./LoginScreen";
 import SignUpScreen from "./SignUpScreen";
-import MainLayout from "./MainLayout"; // ✅ Added MainLayout
+import MainLayout from "./MainLayout";
+import HomeScreen from "./HomeScreen";
+import FindTherapistScreen from "./FindTherapistScreen";
+import LearnMoreScreen from "./LearnMoreScreen";
+import BookNowScreen from "./BookNowScreen";
 
 const Stack = createStackNavigator();
 
@@ -40,8 +46,11 @@ export default function App() {
           <Stack.Screen name="Splash" component={SplashScreen} />
           <Stack.Screen name="Login" component={LoginScreen} />
           <Stack.Screen name="SignUp" component={SignUpScreen} />
-          <Stack.Screen name="MainLayout" component={MainLayout} />{" "}
-          {/* ✅ Added MainLayout */}
+          <Stack.Screen name="MainLayout" component={MainLayout} />
+          <Stack.Screen name="Home" component={HomeScreen} />
+          <Stack.Screen name="FindTherapist" component={FindTherapistScreen} />
+          <Stack.Screen name="LearnMore" component={LearnMoreScreen} />
+          <Stack.Screen name="BookNow" component={BookNowScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     </PaperProvider>
