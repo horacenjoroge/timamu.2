@@ -17,6 +17,7 @@ import HomeScreen from "./HomeScreen";
 import FindTherapistScreen from "./FindTherapistScreen";
 import LearnMoreScreen from "./LearnMoreScreen";
 import BookNowScreen from "./BookNowScreen";
+import MessagesScreen from "./MessagesScreen";
 
 const Stack = createStackNavigator();
 
@@ -51,6 +52,7 @@ export default function App() {
           <Stack.Screen name="FindTherapist" component={FindTherapistScreen} />
           <Stack.Screen name="LearnMore" component={LearnMoreScreen} />
           <Stack.Screen name="BookNow" component={BookNowScreen} />
+          <Stack.Screen name="Messages" component={MessagesScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     </PaperProvider>
