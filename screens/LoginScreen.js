@@ -2,10 +2,24 @@ import React, { useState } from "react";
 import { View, TextInput, TouchableOpacity, StyleSheet } from "react-native";
 import { MaterialCommunityIcons, FontAwesome } from "@expo/vector-icons";
 import { Text, Button } from "react-native-paper";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const handleLogin = async () => {
+    if (!email.trim()) return;
+
+    // Extract username from email (before @ symbol)
+    const username = email.split("@")[0];
+
+    // Store username in AsyncStorage
+    await AsyncStorage.setItem("username", username);
+
+    // Navigate to the main layout
+    navigation.replace("MainLayout");
+  };
 
   return (
     <View style={styles.container}>
@@ -36,13 +50,13 @@ const LoginScreen = ({ navigation }) => {
       />
 
       {/* Login Button */}
-      <Button mode="contained" style={styles.loginButton} onPress={() => {}}>
+      <Button mode="contained" style={styles.loginButton} onPress={handleLogin}>
         Login
       </Button>
 
       {/* Forgot Password & Signup */}
       <View style={styles.options}>
-        <TouchableOpacity onPress={() => {}}>
+        <TouchableOpacity>
           <Text style={styles.optionText}>Forgot Password?</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={() => navigation.navigate("SignUp")}>

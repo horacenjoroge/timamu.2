@@ -4,9 +4,10 @@ import { MaterialCommunityIcons, FontAwesome } from "@expo/vector-icons";
 import { Text, Button } from "react-native-paper";
 
 const SignUpScreen = ({ navigation }) => {
-  const [name, setName] = useState("");
+  const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
 
   return (
     <View style={styles.container}>
@@ -16,14 +17,14 @@ const SignUpScreen = ({ navigation }) => {
         <Text style={styles.appTitle}>Timamu</Text>
       </View>
 
-      {/* Sign-Up Form */}
+      {/* Sign Up Form */}
       <Text style={styles.label}>Full Name</Text>
       <TextInput
         style={styles.input}
         placeholder="Enter your full name"
         placeholderTextColor="#ccc"
-        value={name}
-        onChangeText={setName}
+        value={fullName}
+        onChangeText={setFullName}
       />
 
       <Text style={styles.label}>Email</Text>
@@ -45,8 +46,22 @@ const SignUpScreen = ({ navigation }) => {
         onChangeText={setPassword}
       />
 
-      {/* Sign-Up Button */}
-      <Button mode="contained" style={styles.signUpButton} onPress={() => {}}>
+      <Text style={styles.label}>Confirm Password</Text>
+      <TextInput
+        style={styles.input}
+        placeholder="Re-enter your password"
+        placeholderTextColor="#ccc"
+        secureTextEntry
+        value={confirmPassword}
+        onChangeText={setConfirmPassword}
+      />
+
+      {/* Sign Up Button */}
+      <Button
+        mode="contained"
+        style={styles.signupButton}
+        onPress={() => navigation.replace("Login")}
+      >
         Sign Up
       </Button>
 
@@ -65,20 +80,20 @@ const SignUpScreen = ({ navigation }) => {
         <View style={styles.line} />
       </View>
 
-      {/* Social Sign-Up Buttons */}
+      {/* Social Sign Up Buttons */}
       <View style={styles.socialButtons}>
         <TouchableOpacity
           style={[styles.socialButton, { backgroundColor: "#DB4437" }]}
         >
           <FontAwesome name="google" size={20} color="white" />
-          <Text style={styles.socialText}>Sign Up with Google</Text>
+          <Text style={styles.socialText}>Google</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
           style={[styles.socialButton, { backgroundColor: "#1877F2" }]}
         >
           <FontAwesome name="facebook" size={20} color="white" />
-          <Text style={styles.socialText}>Sign Up with Facebook</Text>
+          <Text style={styles.socialText}>Facebook</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -118,7 +133,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     marginBottom: 15,
   },
-  signUpButton: {
+  signupButton: {
     backgroundColor: "#50C878",
     padding: 12,
     width: "100%",
@@ -128,6 +143,7 @@ const styles = StyleSheet.create({
   options: {
     flexDirection: "row",
     justifyContent: "center",
+    width: "100%",
     marginTop: 10,
   },
   optionText: {
