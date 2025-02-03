@@ -1,7 +1,6 @@
 import React from "react";
 import {
   View,
-  Text,
   StyleSheet,
   TextInput,
   TouchableOpacity,
@@ -12,30 +11,51 @@ import {
   FontAwesome,
 } from "@expo/vector-icons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { createStackNavigator } from "@react-navigation/stack";
 
-// Placeholder Screens
-const HomeScreen = () => (
-  <View style={styles.screen}>
-    <Text>Home Screen</Text>
-  </View>
-);
-const FindTherapistScreen = () => (
-  <View style={styles.screen}>
-    <Text>Find Therapist</Text>
-  </View>
-);
-const MessagesScreen = () => (
-  <View style={styles.screen}>
-    <Text>Messages</Text>
-  </View>
-);
-const ProfileScreen = () => (
-  <View style={styles.screen}>
-    <Text>Profile Screen</Text>
-  </View>
-);
+// Import all screens
+import HomeScreen from "./HomeScreen";
+import FindTherapistScreen from "./FindTherapistScreen";
+import MessagesScreen from "./MessagesScreen";
+import ProfileScreen from "./ProfileScreen";
+import BookNowScreen from "./BookNowScreen";
+
+import SettingsScreen from "./SettingsScreen";
+import LearnMoreScreen from "./LearnMoreScreen";
 
 const Tab = createBottomTabNavigator();
+const Stack = createStackNavigator();
+
+// Create stack navigators for each tab that needs nested navigation
+const HomeStack = () => (
+  <Stack.Navigator screenOptions={{ headerShown: false }}>
+    <Stack.Screen name="HomeMain" component={HomeScreen} />
+    <Stack.Screen name="BookNow" component={BookNowScreen} />
+    <Stack.Screen name="LearnMore" component={LearnMoreScreen} />
+  </Stack.Navigator>
+);
+
+const MessagesStack = () => (
+  <Stack.Navigator screenOptions={{ headerShown: false }}>
+    <Stack.Screen name="MessagesMain" component={MessagesScreen} />
+   
+  </Stack.Navigator>
+);
+
+const FindTherapistStack = () => (
+  <Stack.Navigator screenOptions={{ headerShown: false }}>
+    <Stack.Screen name="FindTherapistMain" component={FindTherapistScreen} />
+    <Stack.Screen name="BookNow" component={BookNowScreen} />
+    <Stack.Screen name="LearnMore" component={LearnMoreScreen} />
+  </Stack.Navigator>
+);
+
+const ProfileStack = () => (
+  <Stack.Navigator screenOptions={{ headerShown: false }}>
+    <Stack.Screen name="ProfileMain" component={ProfileScreen} />
+    <Stack.Screen name="Settings" component={SettingsScreen} />
+  </Stack.Navigator>
+);
 
 const MainLayout = () => {
   return (
@@ -60,7 +80,7 @@ const MainLayout = () => {
         </TouchableOpacity>
       </View>
 
-      {/* Bottom Tab Navigation */}
+      {/* Tab Navigation */}
       <Tab.Navigator
         screenOptions={{
           headerShown: false,
@@ -71,7 +91,7 @@ const MainLayout = () => {
       >
         <Tab.Screen
           name="Home"
-          component={HomeScreen}
+          component={HomeStack}
           options={{
             tabBarIcon: ({ color }) => (
               <Ionicons name="home" size={24} color={color} />
@@ -79,8 +99,8 @@ const MainLayout = () => {
           }}
         />
         <Tab.Screen
-          name="Find Therapist"
-          component={FindTherapistScreen}
+          name="FindTherapist"
+          component={FindTherapistStack}
           options={{
             tabBarIcon: ({ color }) => (
               <FontAwesome name="search" size={24} color={color} />
@@ -89,7 +109,7 @@ const MainLayout = () => {
         />
         <Tab.Screen
           name="Messages"
-          component={MessagesScreen}
+          component={MessagesStack}
           options={{
             tabBarIcon: ({ color }) => (
               <Ionicons name="chatbubbles" size={24} color={color} />
@@ -98,7 +118,7 @@ const MainLayout = () => {
         />
         <Tab.Screen
           name="Profile"
-          component={ProfileScreen}
+          component={ProfileStack}
           options={{
             tabBarIcon: ({ color }) => (
               <FontAwesome name="user" size={24} color={color} />
@@ -117,17 +137,13 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#F5F5F5",
   },
-  screen: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
   header: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
     backgroundColor: "#008080",
     padding: 15,
+    paddingTop: 45, // Add extra padding for status bar
   },
   searchContainer: {
     flexDirection: "row",
@@ -153,5 +169,9 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
     height: 60,
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
   },
 });

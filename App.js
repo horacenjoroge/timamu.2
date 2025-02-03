@@ -1,38 +1,50 @@
 import React from "react";
-import { NavigationContainer } from "@react-navigation/native";
-import { createStackNavigator } from "@react-navigation/stack";
 import { DefaultTheme, Provider as PaperProvider } from "react-native-paper";
 import {
   useFonts,
   Montserrat_400Regular,
   Montserrat_700Bold,
 } from "@expo-google-fonts/montserrat";
+import { NavigationContainer } from "@react-navigation/native";
+import AppNavigator from "./screens/Navigator"; // Import only the navigator
 
-// Import all screens
-import SplashScreen from "./components/SplashScreen";
-import LoginScreen from "./screens/LoginScreen";
-import SignUpScreen from "./screens/SignUpScreen";
-import MainLayout from "./screens/MainLayout";
-import HomeScreen from "./screens/HomeScreen";
-import FindTherapistScreen from "./screens/FindTherapistScreen";
-import LearnMoreScreen from "./screens/LearnMoreScreen";
-import BookNowScreen from "./screens/BookNowScreen";
-import MessagesScreen from "./screens/MessagesScreen";
-import ProfileScreen from "./screens/ProfileScreen";
-import SettingsScreen from "./screens/SettingsScreen";
-
-const Stack = createStackNavigator();
-
-// Update the theme to include additional typography variants
 const theme = {
   ...DefaultTheme,
+  colors: {
+    ...DefaultTheme.colors,
+    primary: "#008080",
+    accent: "#50C878",
+  },
   fonts: {
+    // Base font variants
     regular: { fontFamily: "Montserrat_400Regular" },
     medium: { fontFamily: "Montserrat_400Regular" },
     bold: { fontFamily: "Montserrat_700Bold" },
+
+    // Label variants
     labelLarge: { fontFamily: "Montserrat_700Bold" },
     labelMedium: { fontFamily: "Montserrat_400Regular" },
     labelSmall: { fontFamily: "Montserrat_400Regular" },
+
+    // Body variants
+    bodyLarge: { fontFamily: "Montserrat_400Regular" },
+    bodyMedium: { fontFamily: "Montserrat_400Regular" },
+    bodySmall: { fontFamily: "Montserrat_400Regular" },
+
+    // Title variants
+    titleLarge: { fontFamily: "Montserrat_700Bold" },
+    titleMedium: { fontFamily: "Montserrat_400Regular" },
+    titleSmall: { fontFamily: "Montserrat_400Regular" },
+
+    // Display variants
+    displayLarge: { fontFamily: "Montserrat_700Bold" },
+    displayMedium: { fontFamily: "Montserrat_700Bold" },
+    displaySmall: { fontFamily: "Montserrat_700Bold" },
+
+    // Headline variants
+    headlineLarge: { fontFamily: "Montserrat_700Bold" },
+    headlineMedium: { fontFamily: "Montserrat_700Bold" },
+    headlineSmall: { fontFamily: "Montserrat_700Bold" }
   },
 };
 
@@ -49,19 +61,7 @@ export default function App() {
   return (
     <PaperProvider theme={theme}>
       <NavigationContainer>
-        <Stack.Navigator screenOptions={{ headerShown: false }}>
-          <Stack.Screen name="Splash" component={SplashScreen} />
-          <Stack.Screen name="Login" component={LoginScreen} />
-          <Stack.Screen name="SignUp" component={SignUpScreen} />
-          <Stack.Screen name="MainLayout" component={MainLayout} />
-          <Stack.Screen name="Home" component={HomeScreen} />
-          <Stack.Screen name="FindTherapist" component={FindTherapistScreen} />
-          <Stack.Screen name="LearnMore" component={LearnMoreScreen} />
-          <Stack.Screen name="BookNow" component={BookNowScreen} />
-          <Stack.Screen name="Messages" component={MessagesScreen} />
-          <Stack.Screen name="Profile" component={ProfileScreen} />
-          <Stack.Screen name="Settings" component={SettingsScreen} />
-        </Stack.Navigator>
+        <AppNavigator />
       </NavigationContainer>
     </PaperProvider>
   );

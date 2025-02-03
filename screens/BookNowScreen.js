@@ -153,7 +153,7 @@ const BookNow = ({ route, navigation }) => {
   );
 };
 
-export default BookNowScreen;
+export default BookNow;
 
 const styles = StyleSheet.create({
   container: {

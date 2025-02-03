@@ -18,7 +18,7 @@ const LoginScreen = ({ navigation }) => {
     await AsyncStorage.setItem("username", username);
 
     // Navigate to the main layout
-    navigation.replace("MainLayout");
+    navigation.replace("MainApp");
   };
 
   return (
