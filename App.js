@@ -9,26 +9,30 @@ import {
 } from "@expo-google-fonts/montserrat";
 
 // Import all screens
-import SplashScreen from "./SplashScreen";
-import LoginScreen from "./LoginScreen";
-import SignUpScreen from "./SignUpScreen";
-import MainLayout from "./MainLayout";
-import HomeScreen from "./HomeScreen";
-import FindTherapistScreen from "./FindTherapistScreen";
-import LearnMoreScreen from "./LearnMoreScreen";
-import BookNowScreen from "./BookNowScreen";
-import MessagesScreen from "./MessagesScreen";
-import ProfileScreen from "./ProfileScreen";
-import SettingsScreen from "./SettingsScreen";
+import SplashScreen from "./components/SplashScreen";
+import LoginScreen from "./screens/LoginScreen";
+import SignUpScreen from "./screens/SignUpScreen";
+import MainLayout from "./screens/MainLayout";
+import HomeScreen from "./screens/HomeScreen";
+import FindTherapistScreen from "./screens/FindTherapistScreen";
+import LearnMoreScreen from "./screens/LearnMoreScreen";
+import BookNowScreen from "./screens/BookNowScreen";
+import MessagesScreen from "./screens/MessagesScreen";
+import ProfileScreen from "./screens/ProfileScreen";
+import SettingsScreen from "./screens/SettingsScreen";
 
 const Stack = createStackNavigator();
 
+// Update the theme to include additional typography variants
 const theme = {
   ...DefaultTheme,
   fonts: {
     regular: { fontFamily: "Montserrat_400Regular" },
     medium: { fontFamily: "Montserrat_400Regular" },
     bold: { fontFamily: "Montserrat_700Bold" },
+    labelLarge: { fontFamily: "Montserrat_700Bold" },
+    labelMedium: { fontFamily: "Montserrat_400Regular" },
+    labelSmall: { fontFamily: "Montserrat_400Regular" },
   },
 };
 

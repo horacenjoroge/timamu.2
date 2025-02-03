@@ -1,4 +1,4 @@
-package com.timamu
+package com.anonymous.Timamu
 
 import android.app.Application
 import android.content.res.Configuration

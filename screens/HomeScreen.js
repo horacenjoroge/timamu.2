@@ -14,60 +14,93 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 const HomeScreen = () => {
   const [userName, setUserName] = useState("");
   const [searchText, setSearchText] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("");
 
-  // Fetch the username stored in AsyncStorage on login
+  // Determine greeting based on device time
+  const currentHour = new Date().getHours();
+  let greetingMessage = "";
+  if (currentHour < 12) greetingMessage = "Good Morning";
+  else if (currentHour < 18) greetingMessage = "Good Afternoon";
+  else greetingMessage = "Good Evening";
+
+  // Fetch username from AsyncStorage
   useEffect(() => {
     const fetchUserName = async () => {
       const storedName = await AsyncStorage.getItem("username");
-      if (storedName) {
-        setUserName(storedName);
-      }
+      if (storedName) setUserName(storedName);
     };
-
     fetchUserName();
   }, []);
 
-  // Dummy therapist data with dynamic images
+  // Dummy therapist data with realistic names and images
   const therapists = [
     {
       id: 1,
-      name: "Dr. Jane Doe",
+      name: "Dr. Grace Mburu",
       specialty: "Anxiety",
-      image: "https://picsum.photos/200?random=1",
+      image: "https://picsum.photos/200?random=21",
     },
     {
       id: 2,
-      name: "Dr. John Smith",
+      name: "Dr. Paul Kamau",
       specialty: "Depression",
-      image: "https://source.unsplash.com/200x200/?portrait,1",
+      image: "https://source.unsplash.com/200x200/?portrait,5",
     },
     {
       id: 3,
-      name: "Dr. Emily White",
-      specialty: "Stress",
-      image: "https://picsum.photos/200?random=2",
+      name: "Dr. Amina Yusuf",
+      specialty: "Stress Management",
+      image: "https://picsum.photos/200?random=22",
+    },
+    {
+      id: 4,
+      name: "Dr. David Njoroge",
+      specialty: "Trauma",
+      image: "https://source.unsplash.com/200x200/?portrait,7",
+    },
+    {
+      id: 5,
+      name: "Dr. Wambui Odhiambo",
+      specialty: "Relationship Issues",
+      image: "https://picsum.photos/200?random=23",
     },
   ];
+
+  // Filter therapists based on search text and selected category
+  const filteredTherapists = therapists.filter((therapist) => {
+    const matchesSearch =
+      therapist.name.toLowerCase().includes(searchText.toLowerCase()) ||
+      therapist.specialty.toLowerCase().includes(searchText.toLowerCase());
+    const matchesCategory =
+      selectedCategory === "" ||
+      therapist.specialty.toLowerCase() === selectedCategory.toLowerCase();
+    return matchesSearch && matchesCategory;
+  });
 
   return (
     <ScrollView style={styles.container}>
       {/* Greeting */}
       <Text style={styles.greeting}>
-        Good Morning, {userName || "Guest"} 👋
+        {greetingMessage}
+        {userName ? `, ${userName}` : ""}
+        {" 👋"}
       </Text>
 
-      {/* Search Bar */}
+      {/* Enhanced Search Bar */}
       <View style={styles.searchContainer}>
+        <Ionicons
+          name="search"
+          size={20}
+          color="#888"
+          style={styles.searchIcon}
+        />
         <TextInput
           style={styles.searchInput}
           placeholder="Search for therapists..."
-          placeholderTextColor="#ccc"
+          placeholderTextColor="#888"
           value={searchText}
           onChangeText={setSearchText}
         />
-        <TouchableOpacity style={styles.searchButton}>
-          <Ionicons name="search" size={20} color="white" />
-        </TouchableOpacity>
       </View>
 
       {/* Quick Categories */}
@@ -76,18 +109,30 @@ const HomeScreen = () => {
         showsHorizontalScrollIndicator={false}
         style={styles.categories}
       >
-        {["Anxiety", "Depression", "Stress", "Trauma"].map(
+        {["", "Anxiety", "Depression", "Stress", "Trauma", "Relationship"].map(
           (category, index) => (
-            <TouchableOpacity key={index} style={styles.categoryItem}>
-              <Text style={styles.categoryText}>{category}</Text>
+            <TouchableOpacity
+              key={index}
+              style={[
+                styles.categoryItem,
+                selectedCategory === category && styles.selectedCategory,
+              ]}
+              onPress={() => setSelectedCategory(category)}
+              activeOpacity={0.7}
+            >
+              <Text style={styles.categoryText}>
+                {category === "" ? "All" : category}
+              </Text>
             </TouchableOpacity>
           )
         )}
       </ScrollView>
 
-      {/* Recommended Therapists List */}
+      {/* Section Title */}
       <Text style={styles.sectionTitle}>Recommended Therapists</Text>
-      {therapists.map((therapist) => (
+
+      {/* Therapist Cards */}
+      {filteredTherapists.map((therapist) => (
         <View key={therapist.id} style={styles.therapistCard}>
           <Image
             source={{ uri: therapist.image }}
@@ -99,6 +144,13 @@ const HomeScreen = () => {
           </View>
         </View>
       ))}
+
+      {/* Additional Content */}
+      <Text style={styles.additionalContent}>
+        Discover top-rated therapists and take the first step towards better
+        mental health. Our personalized recommendations ensure you get the
+        support you need.
+      </Text>
     </ScrollView>
   );
 };
@@ -119,10 +171,20 @@ const styles = StyleSheet.create({
   },
   searchContainer: {
     flexDirection: "row",
-    backgroundColor: "white",
-    borderRadius: 8,
-    padding: 10,
     alignItems: "center",
+    backgroundColor: "white",
+    borderRadius: 25,
+    paddingHorizontal: 15,
+    paddingVertical: 8,
+    elevation: 3,
+    shadowColor: "#000",
+    shadowOpacity: 0.1,
+    shadowRadius: 5,
+    shadowOffset: { width: 0, height: 2 },
+    marginBottom: 15,
+  },
+  searchIcon: {
+    marginRight: 10,
   },
   searchInput: {
     flex: 1,
@@ -130,23 +192,23 @@ const styles = StyleSheet.create({
     fontFamily: "Montserrat_400Regular",
     color: "#333",
   },
-  searchButton: {
-    backgroundColor: "#50C878",
-    padding: 10,
-    borderRadius: 8,
-  },
   categories: {
     marginVertical: 15,
   },
   categoryItem: {
     backgroundColor: "#008080",
-    padding: 10,
-    borderRadius: 8,
+    paddingVertical: 10,
+    paddingHorizontal: 15,
+    borderRadius: 20,
     marginRight: 10,
+  },
+  selectedCategory: {
+    backgroundColor: "#50C878",
   },
   categoryText: {
     color: "white",
     fontFamily: "Montserrat_400Regular",
+    fontSize: 14,
   },
   sectionTitle: {
     fontSize: 18,
@@ -157,16 +219,21 @@ const styles = StyleSheet.create({
   therapistCard: {
     flexDirection: "row",
     backgroundColor: "white",
-    padding: 10,
+    padding: 15,
     borderRadius: 10,
     alignItems: "center",
-    marginBottom: 10,
+    marginBottom: 15,
+    elevation: 2,
+    shadowColor: "#000",
+    shadowOpacity: 0.1,
+    shadowRadius: 3,
+    shadowOffset: { width: 0, height: 2 },
   },
   therapistImage: {
-    width: 50,
-    height: 50,
-    borderRadius: 25,
-    marginRight: 10,
+    width: 60,
+    height: 60,
+    borderRadius: 30,
+    marginRight: 15,
   },
   therapistInfo: {
     flex: 1,
@@ -180,5 +247,13 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontFamily: "Montserrat_400Regular",
     color: "#666",
+    marginTop: 2,
+  },
+  additionalContent: {
+    fontSize: 14,
+    fontFamily: "Montserrat_400Regular",
+    color: "#666",
+    marginTop: 20,
+    textAlign: "center",
   },
 });
